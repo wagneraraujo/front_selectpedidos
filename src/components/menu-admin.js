@@ -53,15 +53,18 @@ const useStyles = makeStyles(theme => ({
   },
   content: {
     flexGrow: 1,
-    padding: theme.spacing(3)
+    padding: theme.spacing(2)
   },
   logoSelect: {
     width: "95%",
     height: "auto",
     padding: theme.spacing(1)
+  },
+  contentPages: {
+    padding: theme.spacing(2)
   }
 }));
-export default function MenuAdmin({ titlePage }) {
+export default function MenuAdmin({ titlePage, componentPages }) {
   const classes = useStyles();
   const theme = useTheme();
   const [mobileOpen, setMobileOpen] = React.useState(false);
@@ -88,7 +91,11 @@ export default function MenuAdmin({ titlePage }) {
         }}
         anchor="left"
       >
-        <img src={logoSelect} className={classes.logoSelect} />
+        <img
+          src={logoSelect}
+          className={classes.logoSelect}
+          alt="Select Nutri"
+        />
         {/* <div className={classes.toolbar} /> */}
         <Divider />
         <List>
