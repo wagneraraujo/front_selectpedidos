@@ -3,7 +3,6 @@ import { BrowserRouter, Switch, Route } from "react-router-dom";
 // representante
 import Home from "./pages/representante/home";
 import detalheProduto from "./pages/representante/produto/detalhe-produto";
-
 //admin
 import Dashboard from "./pages/admin/dashboard/";
 import AdminProdutos from "./pages/admin/produtos";
