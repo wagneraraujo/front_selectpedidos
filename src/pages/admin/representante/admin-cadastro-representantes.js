@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import Grid from "@material-ui/core/Grid";
 import { makeStyles } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
@@ -6,10 +6,8 @@ import MenuAdmin from "../../../components/menu-admin";
 import Paper from "@material-ui/core/Paper";
 import Select from "@material-ui/core/Select";
 import MenuItem from "@material-ui/core/MenuItem";
-import InputLabel from "@material-ui/core/InputLabel";
-import FormControl from "@material-ui/core/FormControl";
 import Button from "@material-ui/core/Button";
-
+import api from "../../../services/api";
 const drawerWidth = 240;
 const useStyles = makeStyles(theme => ({
   contentPages: {
@@ -28,17 +26,54 @@ const useStyles = makeStyles(theme => ({
 }));
 export default function AdminRepresentante() {
   const classes = useStyles();
+  const [name, setName] = React.useState("");
+  const [lastname, setLastname] = React.useState("");
+  const [cpf, setCpf] = React.useState(null);
+  const [phone, setPhone] = React.useState(null);
+  const [stateuser, setStateuser] = React.useState("Seu Estado");
+  const [city, setCity] = React.useState("");
+  const [email, setEmail] = React.useState("");
+  const [password, setPassword] = React.useState("");
+  const [typeUser, setTypeUser] = React.useState(1);
+
+  const [error, setError] = React.useState(null);
+
+  async function handleSubmit(event) {
+    event.preventDefault();
+
+    const data = {
+      type_user: typeUser,
+      name: name,
+      last_name: lastname,
+      cpf_cpnj: parseFloat(cpf),
+      email: email,
+      phone: parseFloat(phone),
+      state: stateuser,
+      city: city,
+      password: password
+    };
+    console.log(data);
+
+    const response = await api.post("/representante/cadastro");
+    if (response.status === 200) {
+      window.location.href = "/admin/representante";
+    } else {
+      alert("algo errado");
+    }
+  }
+
   return (
     <React.Fragment>
-      <MenuAdmin titlePage="Cadastrar um Representante" />
+      <MenuAdmin titlePage="Cadastrar um usuário" />
       <main className={classes.content}>
         <div className={classes.toolbar} />
         <Paper className={classes.contentPages}>
-          <FormControl
+          <form
             className={classes.root}
             noValidate
             autoComplete="off"
             variant="outlined"
+            onSubmit={handleSubmit}
           >
             <Grid container spacing={2}>
               <Grid item xs={6}>
@@ -46,20 +81,29 @@ export default function AdminRepresentante() {
                   id="name_usuario"
                   variant="outlined"
                   label="Seu primeiro Nome"
+                  name="name_usuario"
                   fullWidth
+                  value={name}
+                  onChange={e => setName(e.target.value)}
                 />
               </Grid>
               <Grid item xs={6}>
                 <TextField
                   id="last_name"
+                  name="last_name"
                   variant="outlined"
                   label="Seu sobrenome completo"
                   fullWidth
+                  value={lastname}
+                  onChange={e => setLastname(e.target.value)}
                 />
               </Grid>
               <Grid item xs={6}>
                 <TextField
                   id="cpf_cpnj"
+                  name="cpf_cpnj"
+                  value={cpf}
+                  onChange={e => setCpf(e.target.value)}
                   variant="outlined"
                   label="CPF ou CNPJ"
                   fullWidth
@@ -70,20 +114,22 @@ export default function AdminRepresentante() {
                   id="phone"
                   variant="outlined"
                   label="DDD + Telefone"
+                  name="phone"
                   fullWidth
+                  value={phone}
+                  onChange={e => setPhone(e.target.value)}
                 />
               </Grid>
               <Grid item xs={3}>
-                <label htmlFor="" style={{ position: "absolute" }}>
-                  Escolha um Estado
-                </label>
                 <Select
                   id="state"
-                  value="Selecione"
+                  value="selecione"
                   variant="outlined"
-                  onChange=""
+                  onChange={e => setStateuser(e.target.value)}
                   fullWidth
+                  name="stateUser"
                 >
+                  <MenuItem value="selecione">Seu Estado </MenuItem>
                   <MenuItem value="AC">Acre</MenuItem>
                   <MenuItem value="AL">Alagoas</MenuItem>
                   <MenuItem value="AP">Amapá</MenuItem>
@@ -116,9 +162,12 @@ export default function AdminRepresentante() {
               <Grid item xs={3}>
                 <TextField
                   id="city"
+                  name="city"
                   variant="outlined"
                   label="Cidade"
                   fullWidth
+                  value={city}
+                  onChange={e => setCity(e.target.value)}
                 />
               </Grid>
               <Grid item xs={6}>
@@ -126,7 +175,10 @@ export default function AdminRepresentante() {
                   id="email_usuario"
                   variant="outlined"
                   label="Email"
+                  name="email_usuario"
                   fullWidth
+                  value={email}
+                  onChange={e => setEmail(e.target.value)}
                 />
               </Grid>
               <Grid item xs={6}>
@@ -136,17 +188,23 @@ export default function AdminRepresentante() {
                   label="Senha"
                   fullWidth
                   type="password"
+                  name="password"
+                  value={password}
+                  onChange={e => setPassword(e.target.value)}
                 />
               </Grid>
               <Grid item xs={4}>
                 <Select
                   id="type_user_select"
-                  value="Tipo de usuario"
-                  onChange=""
+                  value={typeUser}
+                  onChange={e => setTypeUser(e.target.value)}
+                  name="type_user"
+                  variant="outlined"
                   fullWidth
                 >
-                  <MenuItem value="1">Representante</MenuItem>
-                  <MenuItem value="2">Administrador</MenuItem>
+                  <MenuItem value="type_user">Tipo de usuário</MenuItem>
+                  <MenuItem value={1}>Representante</MenuItem>
+                  <MenuItem value={2}>Administrador</MenuItem>
                 </Select>
               </Grid>
               <Grid item spacing={3}>
@@ -155,7 +213,7 @@ export default function AdminRepresentante() {
                 </Button>
               </Grid>
             </Grid>
-          </FormControl>
+          </form>
         </Paper>
       </main>
     </React.Fragment>

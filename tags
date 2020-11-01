@@ -5,3 +5,7 @@
 !_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
 !_TAG_PROGRAM_VERSION	5.9~svn20110310	//
 App	src/App.js	/^function App() {$/;"	f
+cpf_cpnj	src/pages/admin/representante/admin-cadastro-representantes.js	/^      cpf_cpnj: parseFloat(cpf),$/;"	p	class:const
+last_name	src/pages/admin/representante/admin-cadastro-representantes.js	/^      last_name: lastname,$/;"	p	class:const
+name	src/pages/admin/representante/admin-cadastro-representantes.js	/^      name: name,$/;"	p	class:const
+type_user	src/pages/admin/representante/admin-cadastro-representantes.js	/^      type_user: typeUser,$/;"	p	class:const
