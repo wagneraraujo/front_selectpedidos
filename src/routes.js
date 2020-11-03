@@ -46,7 +46,7 @@ const Rotas = () => {
           component={AdminCadastroRepresentante}
         />
         <Route
-          path="/admin/representante/editar-representante"
+          path="/admin/representante/editar-representante/:id"
           exact
           component={AdminEditarRepresentante}
         />

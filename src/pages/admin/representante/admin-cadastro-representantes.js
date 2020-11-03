@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import Grid from "@material-ui/core/Grid";
 import { makeStyles } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
@@ -30,7 +30,7 @@ export default function AdminRepresentante() {
   const [lastname, setLastname] = React.useState("");
   const [cpf, setCpf] = React.useState(null);
   const [phone, setPhone] = React.useState(null);
-  const [stateuser, setStateuser] = React.useState("Seu Estado");
+  const [stateuser, setStateuser] = React.useState("selecione");
   const [city, setCity] = React.useState("");
   const [email, setEmail] = React.useState("");
   const [password, setPassword] = React.useState("");
@@ -54,11 +54,25 @@ export default function AdminRepresentante() {
     };
     console.log(data);
 
-    const response = await api.post("/representante/cadastro");
-    if (response.status === 200) {
-      window.location.href = "/admin/representante";
+    if (
+      typeUser !== "" &&
+      name !== "" &&
+      lastname !== "" &&
+      cpf !== "" &&
+      email !== "" &&
+      phone !== "" &&
+      stateuser !== "" &&
+      city !== "" &&
+      password !== ""
+    ) {
+      const response = await api.post("/representante/cadastro", data);
+      if (response.status === 200) {
+        window.location.href = "/admin/representante";
+      } else {
+        alert("algo errado");
+      }
     } else {
-      alert("algo errado");
+      alert("Preencha corretamente os campos");
     }
   }
 
@@ -104,6 +118,7 @@ export default function AdminRepresentante() {
                   name="cpf_cpnj"
                   value={cpf}
                   onChange={e => setCpf(e.target.value)}
+                  type="number"
                   variant="outlined"
                   label="CPF ou CNPJ"
                   fullWidth
@@ -116,6 +131,7 @@ export default function AdminRepresentante() {
                   label="DDD + Telefone"
                   name="phone"
                   fullWidth
+                  type="number"
                   value={phone}
                   onChange={e => setPhone(e.target.value)}
                 />
@@ -123,7 +139,7 @@ export default function AdminRepresentante() {
               <Grid item xs={3}>
                 <Select
                   id="state"
-                  value="selecione"
+                  value={stateuser}
                   variant="outlined"
                   onChange={e => setStateuser(e.target.value)}
                   fullWidth
