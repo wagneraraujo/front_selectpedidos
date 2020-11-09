@@ -1,8 +1,8 @@
 import { BrowserRouter, Switch, Route } from "react-router-dom";
-
 // representante
 import Home from "./pages/representante/home";
 import detalheProduto from "./pages/representante/produto/detalhe-produto";
+
 //admin
 import Dashboard from "./pages/admin/dashboard/";
 import AdminProdutos from "./pages/admin/produtos";
@@ -13,7 +13,14 @@ import AdminCadastroProduto from "./pages/admin/produtos/admin-cadastro-produto"
 import AdminRepresentante from "./pages/admin/representante/";
 import AdminCadastroRepresentante from "./pages/admin/representante/admin-cadastro-representantes";
 import AdminEditarRepresentante from "./pages/admin/representante/admin-editar-representante";
+import LoginRepresentante from "./pages/admin/login";
 
+//minhas empresas
+import MinhasEmpresasLista from "./pages/admin/empresas";
+
+import detalheEmpresa from "./pages/admin/empresas/detalhe-empresa";
+
+import PrivateRoute from "./services/wAuth";
 const Rotas = () => {
   return (
     <BrowserRouter>
@@ -41,6 +48,11 @@ const Rotas = () => {
           component={AdminRepresentante}
         />
         <Route
+          path="/representante/login/"
+          exact
+          component={LoginRepresentante}
+        />
+        <Route
           path="/admin/representante/cadastro-representante"
           exact
           component={AdminCadastroRepresentante}
@@ -49,6 +61,18 @@ const Rotas = () => {
           path="/admin/representante/editar-representante/:id"
           exact
           component={AdminEditarRepresentante}
+        />
+
+        {/* minhas empresas */}
+        <Route
+          path="/admin/representante/:id/minhas-empresas"
+          exact
+          component={MinhasEmpresasLista}
+        />
+        <Route
+          path="/admin/empresa/detalhe/:id/"
+          exact
+          component={detalheEmpresa}
         />
       </Switch>
     </BrowserRouter>

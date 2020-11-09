@@ -45,8 +45,6 @@ export default function AdminRepresentante() {
   useEffect(() => {
     async function getDataRepresentante() {
       let response = await api.get("/representante/" + id);
-      console.log(response.data);
-
       setName(response.data.name);
       setLastname(response.data.last_name);
       setCpf(response.data.cpf_cpnj);

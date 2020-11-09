@@ -1,14 +1,13 @@
-import React, {useState, useEffect} from "react";
-import { withStyles, makeStyles, useTheme } from "@material-ui/core/styles";
-import clsx from 'clsx';
-import CssBaseline from '@material-ui/core/CssBaseline';
-
+import React, { useState, useEffect } from "react";
 import Paper from "@material-ui/core/Paper";
+import { withStyles, makeStyles, useTheme } from "@material-ui/core/styles";
+import MenuAdmin from "../../../components/menu-admin";
 import Grid from "@material-ui/core/Grid";
 import DeleteIcon from "@material-ui/icons/Delete";
 import Button from "@material-ui/core/Button";
 import UpdateIcon from "@material-ui/icons/Update";
-import MenuAdmin from "../../../components/menu-admin";
+import clsx from 'clsx';
+import CssBaseline from '@material-ui/core/CssBaseline';
 
 import api from "../../../services/api";
 import {
@@ -19,7 +18,9 @@ import {
   TableHead,
   TableRow
 } from "@material-ui/core";
+
 const drawerWidth = 240;
+
 const StyledTableCell = withStyles(theme => ({
   head: {
     backgroundColor: theme.palette.common.black,
@@ -29,63 +30,25 @@ const StyledTableCell = withStyles(theme => ({
     fontSize: 14
   }
 }))(TableCell);
-const useStyles = makeStyles((theme) => ({
-  root: {
-    display: 'flex',
+
+const useStyles = makeStyles(theme => ({
+  contentPages: {
+    padding: theme.spacing(2)
   },
-  appBar: {
-    transition: theme.transitions.create(['margin', 'width'], {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.leavingScreen,
-    }),
-  },
-  appBarShift: {
-    width: `calc(100% - ${drawerWidth}px)`,
-    marginLeft: drawerWidth,
-    transition: theme.transitions.create(['margin', 'width'], {
-      easing: theme.transitions.easing.easeOut,
-      duration: theme.transitions.duration.enteringScreen,
-    }),
-  },
-  menuButton: {
-    marginRight: theme.spacing(2),
-  },
-  hide: {
-    display: 'none',
-  },
-  drawer: {
-    width: drawerWidth,
-    flexShrink: 0,
-  },
-  drawerPaper: {
-    width: drawerWidth,
-  },
-  drawerHeader: {
-    display: 'flex',
-    alignItems: 'center',
-    padding: theme.spacing(0, 1),
-    // necessary for content to be below app bar
-    ...theme.mixins.toolbar,
-    justifyContent: 'flex-end',
+  button: {
+    margin: theme.spacing(1)
   },
   content: {
     flexGrow: 1,
     padding: theme.spacing(3),
-    transition: theme.transitions.create('margin', {
+    transition: theme.transitions.create("margin", {
       easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.leavingScreen,
+      duration: theme.transitions.duration.leavingScreen
     }),
-    marginLeft: -drawerWidth,
-  },
-  contentShift: {
-    transition: theme.transitions.create('margin', {
-      easing: theme.transitions.easing.easeOut,
-      duration: theme.transitions.duration.enteringScreen,
-    }),
-    marginLeft: 0,
-  },
+    marginLeft: +drawerWidth,
+    marginTop: 60
+  }
 }));
-
 const StyledTableRow = withStyles(theme => ({
   root: {
     "&:nth-of-type(odd)": {
@@ -93,12 +56,11 @@ const StyledTableRow = withStyles(theme => ({
     }
   }
 }))(TableRow);
-export default function Dashboard({titlePage}) {
+export default function Dashboard({ titlePage }) {
 const classes = useStyles();
-  const theme = useTheme();
   const [open, setOpen] = React.useState(false);
+  const theme = useTheme();
 
-  const [representantes, setRepresentantes] = useState([]);
   const handleDrawerOpen = () => {
     setOpen(true);
   };
@@ -106,6 +68,8 @@ const classes = useStyles();
   const handleDrawerClose = () => {
     setOpen(false);
   };
+  const [representantes, setRepresentantes] = useState([]);
+
   useEffect(() => {
     async function loadUsuarios() {
       const response = await api.get("/representantes");
@@ -114,6 +78,7 @@ const classes = useStyles();
 
     loadUsuarios();
   }, []);
+
   async function handleDelete(id) {
     if (window.confirm("Tem certeza que deseja excluir este usuário?")) {
       let result = await api.delete("representante/" + id);
@@ -123,17 +88,15 @@ const classes = useStyles();
     }
   }
   return (
-   <div className={classes.root}>
-      <CssBaseline />
-      <MenuAdmin
-        titlePage="Todos os Representantes"
-      />
+    <>  
+  <CssBaseline />
+  <div>
+      <MenuAdmin titlePage="Painel Representantes" />
       <main
         className={clsx(classes.content, {
           [classes.contentShift]: open,
         })}
       >
-        <div className={classes.drawerHeader} />
         <Paper className={classes.contentPages}>
           <Grid container>
               <h2>Todos os representantes</h2>
@@ -199,6 +162,7 @@ const classes = useStyles();
           </Grid>
         </Paper>
       </main>
-      </div>
-  );
+    </div>
+  </>
+  )
 }

@@ -1,8 +1,11 @@
-import React, {useState, useEffect} from "react";
+import React, { useState, useEffect } from "react";
 import { withStyles, makeStyles, useTheme } from "@material-ui/core/styles";
-import clsx from 'clsx';
-import CssBaseline from '@material-ui/core/CssBaseline';
+import clsx from "clsx";
+import CssBaseline from "@material-ui/core/CssBaseline";
+import blue from "@material-ui/core/colors/blue";
 
+import ListAltIcon from "@material-ui/icons/ListAlt";
+import { useParams, Route } from "react-router-dom";
 import Paper from "@material-ui/core/Paper";
 import Grid from "@material-ui/core/Grid";
 import DeleteIcon from "@material-ui/icons/Delete";
@@ -29,61 +32,61 @@ const StyledTableCell = withStyles(theme => ({
     fontSize: 14
   }
 }))(TableCell);
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(theme => ({
   root: {
-    display: 'flex',
+    display: "flex"
   },
   appBar: {
-    transition: theme.transitions.create(['margin', 'width'], {
+    transition: theme.transitions.create(["margin", "width"], {
       easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.leavingScreen,
-    }),
+      duration: theme.transitions.duration.leavingScreen
+    })
   },
   appBarShift: {
     width: `calc(100% - ${drawerWidth}px)`,
     marginLeft: drawerWidth,
-    transition: theme.transitions.create(['margin', 'width'], {
+    transition: theme.transitions.create(["margin", "width"], {
       easing: theme.transitions.easing.easeOut,
-      duration: theme.transitions.duration.enteringScreen,
-    }),
+      duration: theme.transitions.duration.enteringScreen
+    })
   },
   menuButton: {
-    marginRight: theme.spacing(2),
+    marginRight: theme.spacing(2)
   },
   hide: {
-    display: 'none',
+    display: "none"
   },
   drawer: {
     width: drawerWidth,
-    flexShrink: 0,
+    flexShrink: 0
   },
   drawerPaper: {
-    width: drawerWidth,
+    width: drawerWidth
   },
   drawerHeader: {
-    display: 'flex',
-    alignItems: 'center',
+    display: "flex",
+    alignItems: "center",
     padding: theme.spacing(0, 1),
     // necessary for content to be below app bar
     ...theme.mixins.toolbar,
-    justifyContent: 'flex-end',
+    justifyContent: "flex-end"
   },
   content: {
     flexGrow: 1,
     padding: theme.spacing(3),
-    transition: theme.transitions.create('margin', {
+    transition: theme.transitions.create("margin", {
       easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.leavingScreen,
+      duration: theme.transitions.duration.leavingScreen
     }),
-    marginLeft: -drawerWidth,
+    marginLeft: -drawerWidth
   },
   contentShift: {
-    transition: theme.transitions.create('margin', {
+    transition: theme.transitions.create("margin", {
       easing: theme.transitions.easing.easeOut,
-      duration: theme.transitions.duration.enteringScreen,
+      duration: theme.transitions.duration.enteringScreen
     }),
-    marginLeft: 0,
-  },
+    marginLeft: 0
+  }
 }));
 
 const StyledTableRow = withStyles(theme => ({
@@ -93,12 +96,13 @@ const StyledTableRow = withStyles(theme => ({
     }
   }
 }))(TableRow);
-export default function Dashboard({titlePage}) {
-const classes = useStyles();
+export default function MinhasEmpresasLista({ titlePage }) {
+  const classes = useStyles();
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
+  let { id } = useParams();
 
-  const [representantes, setRepresentantes] = useState([]);
+  const [empresas, setEmpresas] = useState([]);
   const handleDrawerOpen = () => {
     setOpen(true);
   };
@@ -106,13 +110,18 @@ const classes = useStyles();
   const handleDrawerClose = () => {
     setOpen(false);
   };
+  const bluecor = blue[500]; // #f44336
+
   useEffect(() => {
-    async function loadUsuarios() {
-      const response = await api.get("/representantes");
-      setRepresentantes(response.data.representantes);
+    async function loadEmpresas() {
+      const representante = await api.get("/representante/" + id);
+      const response = await api.get(
+        `admin/representante/${id}/minhas-empresas`
+      );
+      setEmpresas(response.data);
     }
 
-    loadUsuarios();
+    loadEmpresas();
   }, []);
   async function handleDelete(id) {
     if (window.confirm("Tem certeza que deseja excluir este usuário?")) {
@@ -123,49 +132,65 @@ const classes = useStyles();
     }
   }
   return (
-   <div className={classes.root}>
+    <div className={classes.root}>
       <CssBaseline />
-      <MenuAdmin
-        titlePage="Todos os Representantes"
-      />
+      <MenuAdmin titlePage="Empresas Cadastradas" />
       <main
         className={clsx(classes.content, {
-          [classes.contentShift]: open,
+          [classes.contentShift]: open
         })}
       >
         <div className={classes.drawerHeader} />
         <Paper className={classes.contentPages}>
           <Grid container>
-              <h2>Todos os representantes</h2>
+            <h2>Empresas</h2>
             <Grid xs={12}>
               <TableContainer component={Paper}>
                 <Table className={classes.table} aria-label="customized table">
                   <TableHead>
                     <TableRow>
-                      <StyledTableCell>Nome Representante</StyledTableCell>
-                      <StyledTableCell align="left">Email</StyledTableCell>
+                      <StyledTableCell>Razão Social</StyledTableCell>
                       <StyledTableCell align="left">Estado</StyledTableCell>
-                      <StyledTableCell align="left">Telefone</StyledTableCell>
-                      <StyledTableCell align="right">Opcoes</StyledTableCell>
+                      <StyledTableCell align="left">
+                        Nome Respon.
+                      </StyledTableCell>
+                      <StyledTableCell align="left">
+                        Telefone Respon.
+                      </StyledTableCell>
+                      <StyledTableCell align="left">Status</StyledTableCell>
+                      <StyledTableCell align="right">Acoes</StyledTableCell>
                     </TableRow>
                   </TableHead>
                   <TableBody>
-                    {representantes.map((row, index) => (
+                    {empresas.map((row, index) => (
                       <StyledTableRow key={row._id}>
                         <StyledTableCell component="th" scope="row">
-                          {row.name}
+                          {row.razao_social}
                         </StyledTableCell>
                         <StyledTableCell align="left">
-                          {row.email}
+                          {row.estado}
                         </StyledTableCell>
                         <StyledTableCell align="left">
-                          {row.state}
+                          {row.nome_responsavel}
                         </StyledTableCell>
                         <StyledTableCell align="left">
                           {row.phone}
                         </StyledTableCell>
+                        <StyledTableCell align="left">
+                          {row.statuspedido}
+                        </StyledTableCell>
                         <StyledTableCell align="right">
                           <Button
+                            variant="contained"
+                            color="primary"
+                            size="small"
+                            className={classes.button}
+                            startIcon={<ListAltIcon />}
+                          >
+                            Detalhes
+                          </Button>
+                          <Button
+                            spacing={2}
                             variant="contained"
                             color="cyan"
                             size="small"
@@ -178,17 +203,6 @@ const classes = useStyles();
                           >
                             Editar
                           </Button>
-
-                          <Button
-                            variant="contained"
-                            color="secondary"
-                            size="small"
-                            className={classes.button}
-                            startIcon={<DeleteIcon />}
-                            onClick={() => handleDelete(row._id)}
-                          >
-                            Deletar
-                          </Button>
                         </StyledTableCell>
                       </StyledTableRow>
                     ))}
@@ -199,6 +213,6 @@ const classes = useStyles();
           </Grid>
         </Paper>
       </main>
-      </div>
+    </div>
   );
 }
