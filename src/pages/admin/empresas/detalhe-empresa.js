@@ -1,19 +1,37 @@
 import React, {useEffect, useState} from "react";
-import { makeStyles, useTheme } from "@material-ui/core/styles";
+import { makeStyles, useTheme, withStyles } from "@material-ui/core/styles";
 import clsx from 'clsx';
 import CssBaseline from '@material-ui/core/CssBaseline';
-import Card from '@material-ui/core/Card';
-import CardActions from '@material-ui/core/CardActions';
-import CardContent from '@material-ui/core/CardContent';
 import Button from '@material-ui/core/Button';
 
 import Grid from '@material-ui/core/Grid';
 import MenuAdmin from "../../../components/menu-admin";
-import Typography from "@material-ui/core/Typography";
 import Paper from "@material-ui/core/Paper";
 import { useParams, Route } from "react-router-dom";
+import Table from '@material-ui/core/Table';
+import TableBody from '@material-ui/core/TableBody';
+import TableCell from '@material-ui/core/TableCell';
+import TableContainer from '@material-ui/core/TableContainer';
+import TableHead from '@material-ui/core/TableHead';
+import TableRow from '@material-ui/core/TableRow';
 import api from "../../../services/api"
 
+const StyledTableCell = withStyles((theme) => ({
+  head: {
+    backgroundColor: theme.palette.common.black,
+    color: theme.palette.common.white,
+  },
+  body: {
+    fontSize: 14,
+  },
+}))(TableCell);
+const StyledTableRow = withStyles((theme) => ({
+  root: {
+    '&:nth-of-type(odd)': {
+        backgroundColor: "#fff"
+    },
+  },
+}))(TableRow);
 const drawerWidth = 240;
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -117,34 +135,34 @@ const classes = useStyles();
 
   useEffect(() => {
     async function getDataEmpresa(){
-      let {data} = await api.get("/admin/empresa/detalhe/" + id)
-      console.log(data)
+      let response = await api.get("/admin/empresa/detalhe/" + id)
+      console.log(response)
 
-      setRazasocial(razao_social)
-      setNomefantasia(nome_fantasia)
-      setStatuspedido(statuspedido)
-      setEstado(estado)
-      setcidade(cidade)
-      setBairro(bairro)
-      setEndeco(endereco)
-      setCep(cep)
-      seetCpnj(cpnj)
-      setInscricaoestadual(inscricao_estadual)
-      setQtdFuncionarios(qtd_funcionarios)
-      setEmail(email)
-      setPhone(phone)
-      setEnderecocobranca(endereco_cobranca)
-      setEstadoCobranca(estado_cobranca)
-      setCidadeCobranca(cidade_cobranca)
-      setTelefoneCobranca(telefone_cobranca)
-      setNomeresponsavel(nome_responsavel)
-      settelefoneresponsavel(telefone_responsavel)
-      setCpfresponsavvel(cpf_responsavel)
-      setEmailresponsavel(email_responsavel)
-      setAgencia(agencia)
-      setConta(conta)
-      setInstituicao(instituicao)
-      setFavorecido(favorecido)
+      setRazasocial(response.data.razao_social)
+      setNomefantasia(response.data.nome_fantasia)
+      setStatuspedido(response.data.statuspedido)
+      setEstado(response.data.estado)
+      setcidade(response.data.cidade)
+      setBairro(response.data.bairro)
+      setEndeco(response.data.endereco)
+      setCep(response.data.cep)
+      seetCpnj(response.data.cpnj)
+      setInscricaoestadual(response.data.inscricao_estadual)
+      setQtdFuncionarios(response.data.qtd_funcionarios)
+      setEmail(response.data.email)
+      setPhone(response.data.phone)
+      setEnderecocobranca(response.data.endereco_cobranca)
+      setEstadoCobranca(response.data.estado_cobranca)
+      setCidadeCobranca(response.data.cidade_cobranca)
+      setTelefoneCobranca(response.data.telefone_cobranca)
+      setNomeresponsavel(response.data.nome_responsavel)
+      settelefoneresponsavel(response.data.telefone_responsavel)
+      setCpfresponsavvel(response.data.cpf_responsavel)
+      setEmailresponsavel(response.data.email_responsavel)
+      setAgencia(response.data.agencia)
+      setConta(response.data.conta)
+      setInstituicao(response.data.instituicao)
+      setFavorecido(response.data.favorecido)
 
 
     }
@@ -164,29 +182,77 @@ const classes = useStyles();
         <Grid container spacing={2} className={classes.drawerHeader}>
           <Grid item xs={6}></Grid>
           <Grid item xs={6}></Grid>
+          <b> Empresa:</b> {nome_fantasia} | {statuspedido}
         </Grid>
         <Grid container spacing={2} className={classes.drawerHeader}>
-          <Grid item xs={6}>
-<Card className={classes.root}>
-      <CardContent>
-        <Typography className={classes.title} color="textSecondary" gutterBottom>
-          <b> Empresa:</b> {nome_fantasia} | {statuspedido}
-        </Typography>
-        <Typography variant="h5" component="h2">
-        </Typography>
-        <Typography className={classes.pos} color="textSecondary">
-          Dados da Empresa
-        </Typography>
-        <Typography variant="body2" component="p">
-          well meaning and kindly.
-          <br />
-          {'"a benevolent smile"'}
-        </Typography>
-      </CardContent>
-    </Card>
+          <Grid item xs={12} sm={12} >
+ <TableContainer component={Paper}>
+      <Table className={classes.table} aria-label="customized table">
+        <TableBody>
+            <StyledTableRow >
+              <StyledTableCell align="left">Razão Social: <strong>{razao_social}</strong></StyledTableCell>
+              <StyledTableCell align="left">Nome Fantasia: <strong>{nome_fantasia}</strong></StyledTableCell>
+            </StyledTableRow>
+            <StyledTableRow>
+              <StyledTableCell align="left">Estado: <strong>{estado}</strong></StyledTableCell>
+              <StyledTableCell align="left">Cidade: <strong>{cidade}</strong></StyledTableCell>
 
+            </StyledTableRow>
+            <StyledTableRow >
+              <StyledTableCell align="left">Bairro: <strong>{bairro}</strong></StyledTableCell>
+              <StyledTableCell align="left">CEP: <strong>{cep}</strong></StyledTableCell>
+            </StyledTableRow>
+            <StyledTableRow >
+              <StyledTableCell align="left">Endereço: <strong>{endereco}</strong> </StyledTableCell>
+              <StyledTableCell align="left">CPNJ: <strong>{cpnj}</strong> </StyledTableCell>
+            </StyledTableRow>
+            <StyledTableRow >
+              <StyledTableCell align="left">Inscrição Estadual: <strong>{inscricao_estadual}</strong> </StyledTableCell>
+              <StyledTableCell align="left">Qtd Funcionário: <strong>{qtd_funcionarios}</strong> </StyledTableCell>
+            </StyledTableRow>
+            <StyledTableRow >
+              <StyledTableCell align="left">Email: <strong>{email}</strong> </StyledTableCell>
+              <StyledTableCell align="left">Telefone: <strong>{phone}</strong> </StyledTableCell>
+            </StyledTableRow>
+            <StyledTableCell align="left">Cidade Cobrança: <strong>{cidade_cobranca}</strong> </StyledTableCell>
+            <StyledTableCell align="left">Endereço Cobrança: <strong>{endereco_cobranca}</strong> </StyledTableCell>
+            <StyledTableRow>
+
+            </StyledTableRow>
+            <StyledTableRow>
+              <StyledTableCell align="left">Estado Cobrança: <strong>{estado_cobranca}</strong> </StyledTableCell>
+              <StyledTableCell align="left">Telefone Cobrança: <strong>{telefone_cobranca}</strong> </StyledTableCell>
+            </StyledTableRow>
+            <StyledTableRow>
+              <StyledTableCell align="left">Nome Responsável: <strong>{nome_responsavel}</strong> </StyledTableCell>
+              <StyledTableCell align="left">CPF Responsável: <strong>{cpf_responsavel}</strong> </StyledTableCell>
+
+            </StyledTableRow>
+            <StyledTableRow>
+              <StyledTableCell align="left">Telefone Responsável: <strong>{telefone_responsavel}</strong> </StyledTableCell>
+              <StyledTableCell align="left">Email Responsável: <strong>{email_responsavel}</strong> </StyledTableCell>
+
+            </StyledTableRow>
+            <StyledTableRow>
+
+              <StyledTableCell align="left">Agência: <strong>{agencia}</strong> </StyledTableCell>
+              <StyledTableCell align="left">Conta: <strong>{conta}</strong> </StyledTableCell>
+            </StyledTableRow>
+            <StyledTableRow>
+              <StyledTableCell align="left">Nome Banco: <strong>{instituicao}</strong> </StyledTableCell>
+              <StyledTableCell align="left">Favorecido: <strong>{favorecido}</strong> </StyledTableCell>
+
+            </StyledTableRow>
+            <StyledTableRow>
+
+              <Button>Voltar para Empresas</Button>
+
+            </StyledTableRow>
+        </TableBody>
+      </Table>
+    </TableContainer>
           </Grid>
-          <Grid item xs={6}>item2</Grid>
+          <Grid item xs={12} sm={6}>item2</Grid>
         </Grid>
 
       </main>
