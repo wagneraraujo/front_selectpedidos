@@ -15,6 +15,10 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import api from "../../../services/api"
+import { Router, Link } from "react-router-dom";
+import { createBrowserHistory } from "history";
+
+const history = createBrowserHistory();
 
 const StyledTableCell = withStyles((theme) => ({
   head: {
@@ -123,6 +127,7 @@ const classes = useStyles();
 	const [instituicao, setInstituicao] = useState('') 
 	const [favorecido, setFavorecido] = useState('') 
 	const [statuspedido, setStatuspedido] = useState('') 
+  const [idrota, setIdRota] = useState(null)
 
 
   const handleDrawerOpen = () => {
@@ -136,7 +141,8 @@ const classes = useStyles();
   useEffect(() => {
     async function getDataEmpresa(){
       let response = await api.get("/admin/empresa/detalhe/" + id)
-      console.log(response)
+
+      // setIdRota(response.data.id)
 
       setRazasocial(response.data.razao_social)
       setNomefantasia(response.data.nome_fantasia)
@@ -182,7 +188,14 @@ const classes = useStyles();
         <Grid container spacing={2} className={classes.drawerHeader}>
           <Grid item xs={6}></Grid>
           <Grid item xs={6}></Grid>
+        </Grid>
+        <Grid container spacing={2}  className={classes.drawerHeader}>
+          <Grid item xs={6}>
+
           <b> Empresa:</b> {nome_fantasia} | {statuspedido}
+
+          </Grid>
+          <Grid item xs={6}></Grid>
         </Grid>
         <Grid container spacing={2} className={classes.drawerHeader}>
           <Grid item xs={12} sm={12} >
@@ -243,16 +256,19 @@ const classes = useStyles();
               <StyledTableCell align="left">Favorecido: <strong>{favorecido}</strong> </StyledTableCell>
 
             </StyledTableRow>
-            <StyledTableRow>
+            <StyledTableRow spacing={3}>
 
-              <Button>Voltar para Empresas</Button>
 
             </StyledTableRow>
         </TableBody>
       </Table>
     </TableContainer>
           </Grid>
-          <Grid item xs={12} sm={6}>item2</Grid>
+          <Grid item xs={12} >
+
+{/*               <Button color="primary"  href={`/admin/representante/${idrota}/minhas-empresas`} variant="outlined">Voltar para Empresas</Button> */}
+
+            </Grid>
         </Grid>
 
       </main>

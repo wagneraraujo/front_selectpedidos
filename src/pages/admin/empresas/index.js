@@ -186,6 +186,7 @@ export default function MinhasEmpresasLista({ titlePage }) {
                             size="small"
                             className={classes.button}
                             startIcon={<ListAltIcon />}
+                            href={`/admin/empresa/detalhe/${id}`}
                           >
                             Detalhes
                           </Button>

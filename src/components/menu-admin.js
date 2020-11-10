@@ -1,4 +1,5 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
+import { useParams, Route } from "react-router-dom";
 import clsx from 'clsx';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
@@ -21,8 +22,17 @@ import CardGiftcardIcon from "@material-ui/icons/CardGiftcard";
 import BusinessIcon from "@material-ui/icons/Business";
 import AddShoppingCartIcon from "@material-ui/icons/AddShoppingCart";
 import ExitToAppIcon from "@material-ui/icons/ExitToApp";
+import Collapse from '@material-ui/core/Collapse';
+
 import SettingsIcon from "@material-ui/icons/Settings";
 import logoSelect from "../images/logo.png";
+
+import ExpandLess from '@material-ui/icons/ExpandLess';
+import ExpandMore from '@material-ui/icons/ExpandMore';
+import StarBorder from '@material-ui/icons/StarBorder';
+import InboxIcon from '@material-ui/icons/MoveToInbox';
+
+import api from "../services/api"
 const drawerWidth = 240;
 
 const useStyles = makeStyles((theme) => ({
@@ -84,9 +94,14 @@ const useStyles = makeStyles((theme) => ({
 
 
 export default function MenuAdmin({ titlePage}) {
+  let { id } = useParams();
   const classes = useStyles();
   const theme = useTheme();
+  const [nomerepresentante, setNomeRepresentante] = useState('Representante')
   const [open, setOpen] = React.useState(false);
+   const handleClick = () => {
+    setOpen(!open);
+  };
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -95,6 +110,17 @@ export default function MenuAdmin({ titlePage}) {
   const handleDrawerClose = () => {
     setOpen(false);
   };
+
+  useEffect(() => {
+    async function dadosRepresentante(){
+      let idre = "5fa7dd62388fe0d1e1c2dd33"
+      let response = await api.get("/representante/" + idre)
+      console.log(response)
+    setNomeRepresentante(response.data.name)
+    }
+
+    dadosRepresentante()
+  }, [])
   return (
     <div className={classes.root}>
       <CssBaseline />
@@ -105,7 +131,7 @@ export default function MenuAdmin({ titlePage}) {
           [classes.appBarShift]: open,
         })}
       >
-        <Toolbar>
+        <Toolbar style={{display:'flex', justifyContent:'space-between'}}>
           <IconButton
             color="inherit"
             aria-label="open drawer"
@@ -118,6 +144,11 @@ export default function MenuAdmin({ titlePage}) {
           <Typography variant="h6" noWrap>
             {titlePage} 
           </Typography>
+          <Typography variant="a" align="right" Wrap>
+Olá {nomerepresentante}
+
+          </Typography>
+
         </Toolbar>
       </AppBar>
         <Drawer
@@ -187,6 +218,7 @@ export default function MenuAdmin({ titlePage}) {
             </ListItemIcon>
             <ListItemText primary="Sair" />
           </ListItem>
+          
         </List>
       </Drawer>
     </div>
