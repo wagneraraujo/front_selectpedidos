@@ -10,6 +10,8 @@ import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
 import Grid from '@material-ui/core/Grid';
 import MenuItem from "@material-ui/core/MenuItem";
+import Divider from '@material-ui/core/Divider';
+
 
 const drawerWidth = 240;
 const useStyles = makeStyles((theme) => ({
@@ -78,16 +80,8 @@ const useStyles = makeStyles((theme) => ({
 
 export default function CadastrarEmpresa({titlePage}) {
 const classes = useStyles();
-  const theme = useTheme();
-  const [open, setOpen] = React.useState(false);
+  const [open ] = React.useState(false);
 
-  const handleDrawerOpen = () => {
-    setOpen(true);
-  };
-
-  const handleDrawerClose = () => {
-    setOpen(false);
-  };
   const [razao_social , setRazasocial]  = useState('')
 	const [nome_fantasia , setNomefantasia] = useState('') 
 	const [estado, setEstado] = useState('') 
@@ -115,6 +109,10 @@ const classes = useStyles();
 	const [email_representante, setEmailrepresentante] = useState('') 
 	const [informacoes_adicionais, setInformacoesadicionais] = useState('') 
 
+  async function CadastreEmpresaForm(e){
+    e.preventDefault()
+    
+  }
   return (
    <div className={classes.root}>
       <CssBaseline />
@@ -128,8 +126,12 @@ const classes = useStyles();
       >
         <div className={classes.drawerHeader} />
         <Typography paragraph>Cadastre a empresa no formulário abaixo, e aguarde análise pela Select Nutri, não se preocupe, voce será notificado. Preencha corretamente todos os campos.</Typography>
-        <form className={classes.root} noValidate autoComplete="off">
+        <form onSubmit={CadastreEmpresaForm} className={classes.root} noValidate autoComplete="off">
           <Grid container spacing={1}>
+            <Grid item xs={12} md={12} lx={12} spacing={3} style={{margin:"30px 0 10px 0"}}>
+              <Typography variant="h5"  >Dados da Empresa</Typography>
+              <Divider spacing={3} />
+            </Grid>
             <Grid item xs={12} sm={6} md={4} xl={3}>
               <TextField id=""
                   value={razao_social}
@@ -209,6 +211,7 @@ const classes = useStyles();
             <Grid item xs={12} sm={6} md={4} xl={3}>
               <TextField id=""
                   value={cpnj}
+                  type="number"
                   onChange={e => seetCpnj(e.target.value)}
                 label="CPNJ" required variant="outlined" fullWidth />
             </Grid>
@@ -220,6 +223,7 @@ const classes = useStyles();
             </Grid>
             <Grid item xs={12} sm={6} md={4} xl={3}>
               <TextField id=""
+                type="number"
                   value={qtd_funcionarios}
                   onChange={e => setQtdFuncionarios(e.target.value)}
                 label="Qtd. Funcionários" required variant="outlined" fullWidth />
@@ -238,6 +242,11 @@ const classes = useStyles();
                   onChange={e => setPhone(e.target.value)}
                 label="DDD + Telefone" required variant="outlined" fullWidth />
             </Grid>
+
+            <Grid item xs={12} md={12} lx={12} spacing={3} style={{margin:"30px 0 10px 0"}}>
+              <Typography variant="h5"  >Dados de Cobrança</Typography>
+              <Divider spacing={3} />
+            </Grid>
             <Grid item xs={12} sm={6} md={4} xl={3}>
               <TextField id=""
                   value={endereco_cobranca}
@@ -253,6 +262,7 @@ const classes = useStyles();
             <Grid item xs={12} sm={6} md={4} xl={3}>
               <TextField id=""
                   value={telefone_cobranca}
+                  type="number"
                   onChange={e => setTelefoneCobranca(e.target.value)}
                 label="DDD + telefone" type="number" required variant="outlined" fullWidth />
             </Grid>
@@ -265,11 +275,13 @@ const classes = useStyles();
             <Grid item xs={12} sm={6} md={4} xl={3}>
               <TextField id=""
                   value={telefone_responsavel}
+                  type="number"
                   onChange={e => settelefoneresponsavel(e.target.value)}
                 label="DDD + Telefone Responsável" ttype="number" required variant="outlined" fullWidth />
             </Grid>
             <Grid item xs={12} sm={6} md={4} xl={3}>
               <TextField id=""
+                type="number"
                   value={cpf_responsavel}
                   onChange={e => setCpfresponsavvel(e.target.value)}
                 label="CPF do responsável" required variant="outlined" fullWidth />
@@ -279,6 +291,10 @@ const classes = useStyles();
                   value={email_responsavel}
                   onChange={e => setEmailresponsavel(e.target.value)}
                 label="Email do responsável" required variant="outlined" fullWidth />
+            </Grid>
+            <Grid item xs={12} md={12} lx={12} spacing={3} style={{margin:"30px 0 10px 0"}}>
+              <Typography variant="h5"  >Dados Bancários</Typography>
+              <Divider spacing={3} />
             </Grid>
             <Grid item xs={12} sm={6} md={4} xl={3}>
               <TextField id=""
@@ -304,6 +320,23 @@ const classes = useStyles();
                   onChange={e => setFavorecido(e.target.value)}
                 label="Nome Completo Favorecido" required variant="outlined" fullWidth />
             </Grid>
+            <Grid item xs={12} md={12} lx={12} spacing={3} style={{margin:"30px 0 10px 0"}}>
+              <Typography variant="h5"  >Informações Adicionais sobre esse cadastro.(Se tiver)</Typography>
+              <Divider spacing={3} />
+            </Grid>
+            <Grid item xs={12} sm={6} md={8} xl={6}>
+              <TextField id=""
+                placeholder="Escreva aqui"
+                  value={informacoes_adicionais}
+                  multiline
+          rows={6}
+                  onChange={e => setInformacoesadicionais(e.target.value)}
+                label="Informações Adicionais" required variant="outlined" fullWidth />
+            </Grid>
+            <Grid item xs={12} md={12} lx={12} spacing={3} style={{margin:"30px 0 10px 0"}}>
+              <Typography variant="h5"  >Dados do representante</Typography>
+              <Divider spacing={3} />
+            </Grid>
             <Grid item xs={12} sm={6} md={4} xl={3}>
               <TextField id=""
                   value={nome_representante}
@@ -316,15 +349,9 @@ const classes = useStyles();
                   onChange={e => setEmailrepresentante(e.target.value)}
                 label="Email Representante" required variant="outlined" fullWidth />
             </Grid>
-            <Grid item xs={12} sm={6} md={4} xl={3}>
-              <TextField id=""
-                  value={informacoes_adicionais}
-                  onChange={e => setInformacoesadicionais(e.target.value)}
-                label="" required variant="outlined" fullWidth />
-            </Grid>
             <Grid item xs={12}>
 
-                <Button type="submit">Finalizar Cadastro</Button>
+                <Button type="submit" size="large" color="primary" variant="contained">Finalizar Cadastro</Button>
             </Grid>
           </Grid>
     </form>
