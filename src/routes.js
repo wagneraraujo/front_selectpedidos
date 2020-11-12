@@ -18,7 +18,7 @@ import LoginRepresentante from "./pages/admin/login";
 //minhas empresas
 import MinhasEmpresasLista from "./pages/admin/empresas";
 import detalheEmpresa from "./pages/admin/empresas/detalhe-empresa";
-import CadastrarEmpresa from "./pages/admin/empresas/cadastrar-empresa"
+import CadastrarEmpresa from "./pages/admin/empresas/cadastrar-empresa";
 
 import PrivateRoute from "./services/wAuth";
 const Rotas = () => {
@@ -75,7 +75,7 @@ const Rotas = () => {
           component={detalheEmpresa}
         />
         <Route
-          path="/admin/empresa/cadastrar-empresa"
+          path="/empresa/cadastrar-empresa"
           exact
           component={CadastrarEmpresa}
         />
