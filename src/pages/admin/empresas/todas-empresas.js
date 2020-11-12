@@ -101,6 +101,7 @@ export default function TodasEmpresasLista({ titlePage }) {
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
 
+  let { id } = useParams();
   const [empresas, setEmpresas] = useState([]);
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -182,6 +183,7 @@ export default function TodasEmpresasLista({ titlePage }) {
                             size="small"
                             className={classes.button}
                             startIcon={<ListAltIcon />}
+                            href={`admin/empresa/detalhe/${id}`}
                           >
                             Detalhes
                           </Button>
@@ -192,10 +194,7 @@ export default function TodasEmpresasLista({ titlePage }) {
                             size="small"
                             className={classes.button}
                             startIcon={<UpdateIcon />}
-                            href={
-                              "/admin/representante/editar-representante/" +
-                              row._id
-                            }
+                            href={"" + row._id}
                           >
                             Editar
                           </Button>
