@@ -169,36 +169,36 @@ export default function MenuAdmin({ titlePage }) {
         </div>
         <Divider />
         <List>
-          <ListItem button component="a" href="/admin">
-            <ListItemIcon>
-              <HomeIcon />
-            </ListItemIcon>
-            <ListItemText primary="Home" />
-          </ListItem>
-          <ListItem button component="a" href="/admin/representante">
-            <ListItemIcon>
-              <AccountCircleIcon />
-            </ListItemIcon>
-            <ListItemText primary="Representantes" />
-          </ListItem>
-          <ListItem button component="a" href="/admin/empresas">
+          {/*   <ListItem button component="a" href="/admin"> */}
+          {/*     <ListItemIcon> */}
+          {/*       <HomeIcon /> */}
+          {/*     </ListItemIcon> */}
+          {/*     <ListItemText primary="Home" /> */}
+          {/*   </ListItem> */}
+          {/*   <ListItem button component="a" href="/admin/representante"> */}
+          {/*     <ListItemIcon> */}
+          {/*       <AccountCircleIcon /> */}
+          {/*     </ListItemIcon> */}
+          {/*     <ListItemText primary="Representantes" /> */}
+          {/*   </ListItem> */}
+          <ListItem button component="a" href="/empresa/cadastrar-empresa">
             <ListItemIcon>
               <BusinessIcon />
             </ListItemIcon>
             <ListItemText primary="Empresas" />
           </ListItem>
-          <ListItem button component="a" href="/admin/produtos">
-            <ListItemIcon>
-              <CardGiftcardIcon />
-            </ListItemIcon>
-            <ListItemText primary="Produtos" />
-          </ListItem>
-          <ListItem button component="a" href="/admin/pedidos">
-            <ListItemIcon>
-              <AddShoppingCartIcon />
-            </ListItemIcon>
-            <ListItemText primary="Pedidos" />
-          </ListItem>
+          {/* <ListItem button component="a" href="/admin/produtos"> */}
+          {/*   <ListItemIcon> */}
+          {/*     <CardGiftcardIcon /> */}
+          {/*   </ListItemIcon> */}
+          {/*   <ListItemText primary="Produtos" /> */}
+          {/* </ListItem> */}
+          {/* <ListItem button component="a" href="/admin/pedidos"> */}
+          {/*   <ListItemIcon> */}
+          {/*     <AddShoppingCartIcon /> */}
+          {/*   </ListItemIcon> */}
+          {/*   <ListItemText primary="Pedidos" /> */}
+          {/* </ListItem> */}
         </List>
         <Divider />
         <List>
