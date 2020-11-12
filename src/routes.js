@@ -20,6 +20,7 @@ import MinhasEmpresasLista from "./pages/admin/empresas";
 import detalheEmpresa from "./pages/admin/empresas/detalhe-empresa";
 import CadastrarEmpresa from "./pages/admin/empresas/cadastrar-empresa";
 import TodasEmpresasLista from "./pages/admin/empresas/todas-empresas";
+import AtualizarEmpresa from "./pages/admin/empresas/atualizar-empresa";
 
 import PrivateRoute from "./services/wAuth";
 const Rotas = () => {
@@ -84,6 +85,11 @@ const Rotas = () => {
           path="/admin/todas-empresas"
           exact
           component={TodasEmpresasLista}
+        />
+        <Route
+          path="/empresas/atualizar/:id"
+          exact
+          component={AtualizarEmpresa}
         />
       </Switch>
     </BrowserRouter>

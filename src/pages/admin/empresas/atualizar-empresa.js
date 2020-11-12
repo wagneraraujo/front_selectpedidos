@@ -132,8 +132,6 @@ export default function CadastrarEmpresa({ titlePage }) {
       conta,
       instituicao,
       favorecido,
-      nome_representante,
-      email_representante,
       informacoes_adicionais
     };
 
@@ -157,14 +155,9 @@ export default function CadastrarEmpresa({ titlePage }) {
       agencia !== "" &&
       conta !== "" &&
       instituicao !== "" &&
-      favorecido !== "" &&
-      nome_representante !== "" &&
-      email_representante !== ""
+      favorecido !== ""
     ) {
-      const response = await api.post(
-        "/empresa/cadastro-empresa/",
-        infosEmpresa
-      );
+      const response = await api.put("/empresas/atualizar/", infosEmpresa);
       if (response.status === 200) {
         alert(
           "Cadastro Realizado com Sucesso. Aguarde a análise da Select Nutri e você será avisado."
@@ -183,17 +176,15 @@ export default function CadastrarEmpresa({ titlePage }) {
   return (
     <div className={classes.root}>
       <CssBaseline />
-      <MenuAdmin titlePage="Cadastrar Empresa" />
+      <MenuAdmin titlePage="Atualizar dados da  Empresa" />
       <main
         className={clsx(classes.content, {
           [classes.contentShift]: open
         })}
       >
         <div className={classes.drawerHeader} />
-        <Typography paragraph>
-          Cadastre a empresa no formulário abaixo, e aguarde análise pela Select
-          Nutri, não se preocupe, voce será notificado. Preencha corretamente
-          todos os campos.
+        <Typography paragraph style={{ color: "red" }}>
+          Em desenvolvimento, aguarde
         </Typography>
         <form
           onSubmit={CadastreEmpresaForm}

@@ -101,7 +101,6 @@ export default function TodasEmpresasLista({ titlePage }) {
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
 
-  let { id } = useParams();
   const [empresas, setEmpresas] = useState([]);
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -115,7 +114,6 @@ export default function TodasEmpresasLista({ titlePage }) {
     async function loadEmpresas() {
       const todasEmpresas = await api.get("/admin/empresas/");
       setEmpresas(todasEmpresas.data.empresa);
-      console.log(todasEmpresas.data.empresa);
     }
 
     loadEmpresas();
@@ -154,6 +152,7 @@ export default function TodasEmpresasLista({ titlePage }) {
                       <StyledTableCell align="left">
                         Telefone Respon.
                       </StyledTableCell>
+                      <StyledTableCell align="left">CNPJ</StyledTableCell>
                       <StyledTableCell align="left">Status</StyledTableCell>
                       <StyledTableCell align="right">Acoes</StyledTableCell>
                     </TableRow>
@@ -174,6 +173,9 @@ export default function TodasEmpresasLista({ titlePage }) {
                           {row.phone}
                         </StyledTableCell>
                         <StyledTableCell align="left">
+                          {row.cpnj}
+                        </StyledTableCell>
+                        <StyledTableCell align="left">
                           {row.statuspedido}
                         </StyledTableCell>
                         <StyledTableCell align="right">
@@ -183,7 +185,7 @@ export default function TodasEmpresasLista({ titlePage }) {
                             size="small"
                             className={classes.button}
                             startIcon={<ListAltIcon />}
-                            href={`admin/empresa/detalhe/${id}`}
+                            href={"/admin/empresa/detalhe/" + row._id}
                           >
                             Detalhes
                           </Button>
@@ -194,7 +196,7 @@ export default function TodasEmpresasLista({ titlePage }) {
                             size="small"
                             className={classes.button}
                             startIcon={<UpdateIcon />}
-                            href={"" + row._id}
+                            href={"/empresas/atualizar/" + row._id}
                           >
                             Editar
                           </Button>
