@@ -52,7 +52,6 @@ export default function AdminRepresentante() {
       city: city,
       password: password
     };
-    console.log(data);
 
     if (
       typeUser !== "" &&
