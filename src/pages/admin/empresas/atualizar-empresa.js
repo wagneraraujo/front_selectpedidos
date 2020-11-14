@@ -11,6 +11,7 @@ import Grid from "@material-ui/core/Grid";
 import MenuItem from "@material-ui/core/MenuItem";
 import Divider from "@material-ui/core/Divider";
 
+import { useParams, Route } from "react-router-dom";
 import api from "../../../services/api";
 
 const drawerWidth = 240;
@@ -74,7 +75,9 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-export default function CadastrarEmpresa({ titlePage }) {
+export default function AtualizarEmpresa({ titlePage }) {
+  let { id } = useParams();
+
   const classes = useStyles();
   const [open] = React.useState(false);
 
@@ -101,14 +104,45 @@ export default function CadastrarEmpresa({ titlePage }) {
   const [conta, setConta] = useState("");
   const [instituicao, setInstituicao] = useState("");
   const [favorecido, setFavorecido] = useState("");
-  const [nome_representante, setnomerepresentante] = useState("");
-  const [email_representante, setEmailrepresentante] = useState("");
   const [informacoes_adicionais, setInformacoesadicionais] = useState("");
 
+  useEffect(() => {
+    async function getDataEmpresa() {
+      let response = await api.get("/admin/empresa/detalhe/" + id);
+      // setName(response.data.name);
+      setRazasocial(response.data.razao_social);
+      setNomefantasia(response.data.razao_social);
+      setEstado(response.data.estado);
+      setBairro(response.data.bairro);
+      setcidade(response.data.cidade);
+      setCep(response.data.cep);
+      setEndeco(response.data.endereco);
+      seetCpnj(response.data.cpnj);
+      setInscricaoestadual(response.data.inscricao_estadual);
+      setQtdFuncionarios(response.data.qtd_funcionarios);
+      setEmail(response.data.email);
+      setPhone(response.data.phone);
+      setEnderecocobranca(response.data.endereco_cobranca);
+      setCidadeCobranca(response.data.cidade_cobranca);
+      setTelefoneCobranca(response.data.telefone_cobranca);
+      setNomeresponsavel(response.data.nome_responsavel);
+      settelefoneresponsavel(response.data.telefone_responsavel);
+      setCpfresponsavvel(response.data.cpf_responsavel);
+      setEmailresponsavel(response.data.email_responsavel);
+      setAgencia(response.data.agencia);
+      setConta(response.data.conta);
+      setInstituicao(response.data.instituicao);
+      setFavorecido(response.data.favorecido);
+      setInformacoesadicionais(response.data.informacoes_adicionais);
+    }
+
+    getDataEmpresa();
+  }, []);
   async function CadastreEmpresaForm(e) {
     e.preventDefault();
 
     const infosEmpresa = {
+      _id: id,
       razao_social: razao_social,
       nome_fantasia,
       estado,
@@ -157,12 +191,10 @@ export default function CadastrarEmpresa({ titlePage }) {
       instituicao !== "" &&
       favorecido !== ""
     ) {
-      const response = await api.put("/empresas/atualizar/", infosEmpresa);
+      const response = await api.put("/empresas/atualizar/" + id, infosEmpresa);
       if (response.status === 200) {
-        alert(
-          "Cadastro Realizado com Sucesso. Aguarde a análise da Select Nutri e você será avisado."
-        );
-        window.location.href = "/empresa/cadastrar-empresa/";
+        alert("Dados da Empresa atualizados com sucesso.");
+        window.location.href = "/admin/todas-empresas/";
       } else {
         alert("Algo errado no cadastro");
       }
@@ -545,39 +577,6 @@ export default function CadastrarEmpresa({ titlePage }) {
                 fullWidth
               />
             </Grid>
-            <Grid
-              item
-              xs={12}
-              md={12}
-              lx={12}
-              spacing={3}
-              style={{ margin: "30px 0 10px 0" }}
-            >
-              <Typography variant="h5">Dados do representante</Typography>
-              <Divider spacing={3} />
-            </Grid>
-            <Grid item xs={12} sm={6} md={4} xl={3}>
-              <TextField
-                id=""
-                value={nome_representante}
-                onChange={e => setnomerepresentante(e.target.value)}
-                label="Nome do Representante"
-                required
-                variant="outlined"
-                fullWidth
-              />
-            </Grid>
-            <Grid item xs={12} sm={6} md={4} xl={3}>
-              <TextField
-                id=""
-                value={email_representante}
-                onChange={e => setEmailrepresentante(e.target.value)}
-                label="Email Representante"
-                required
-                variant="outlined"
-                fullWidth
-              />
-            </Grid>
             <Grid item xs={12}>
               <Button
                 type="submit"
@@ -585,7 +584,7 @@ export default function CadastrarEmpresa({ titlePage }) {
                 color="primary"
                 variant="contained"
               >
-                Finalizar Cadastro
+                Atualizar Dados desta Empresa
               </Button>
             </Grid>
           </Grid>
