@@ -215,9 +215,6 @@ export default function AtualizarEmpresa({ titlePage }) {
         })}
       >
         <div className={classes.drawerHeader} />
-        <Typography paragraph style={{ color: "red" }}>
-          Em desenvolvimento, aguarde
-        </Typography>
         <form
           onSubmit={CadastreEmpresaForm}
           className={classes.root}
@@ -225,6 +222,15 @@ export default function AtualizarEmpresa({ titlePage }) {
           autoComplete="off"
         >
           <Grid container spacing={1}>
+            <Grid item xs={12} align="right">
+              <Button
+                variant="contained"
+                color="cyan"
+                href="/admin/todas-empresas/"
+              >
+                Voltar para lista de empresas
+              </Button>
+            </Grid>
             <Grid
               item
               xs={12}

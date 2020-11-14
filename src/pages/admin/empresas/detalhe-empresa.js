@@ -191,7 +191,15 @@ export default function Dashboard({ titlePage }) {
           <Grid item xs={6}>
             <b> Empresa:</b> {nome_fantasia} | {statuspedido}
           </Grid>
-          <Grid item xs={6}></Grid>
+          <Grid item xs={6} align="right">
+            <Button
+              variant="contained"
+              color="cyan"
+              href="/admin/todas-empresas/"
+            >
+              Voltar para lista de empresas
+            </Button>
+          </Grid>
         </Grid>
         <Grid container spacing={2} className={classes.drawerHeader}>
           <Grid item xs={12} sm={12}>
