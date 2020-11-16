@@ -86,7 +86,7 @@ export default function AdminRepresentante() {
       city !== "" &&
       password !== ""
     ) {
-      const response = await api.put("/representante/cadastro", data);
+      const response = await api.put("/representante/update/" + id, data);
       if (response.status === 200) {
         alert("Representante atualizado com sucesso!");
         window.location.href = "/admin/representante";
@@ -101,7 +101,7 @@ export default function AdminRepresentante() {
   return (
     <React.Fragment>
       <MenuAdmin titlePage="Atualizar Dados" />
-      <main className={classes.content}>
+      <main className="" style={{ marginTop: "80px" }}>
         <div className={classes.toolbar} />
         <Paper className={classes.contentPages}>
           <form
@@ -112,6 +112,15 @@ export default function AdminRepresentante() {
             onSubmit={handleSubmit}
           >
             <Grid container spacing={2}>
+              <Grid item xs={12} align="right">
+                <Button
+                  variant="contained"
+                  color="cyan"
+                  href="/admin/representante/"
+                >
+                  Voltar para lista de Representantes
+                </Button>
+              </Grid>
               <Grid item xs={6}>
                 <TextField
                   id="name_usuario"
