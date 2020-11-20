@@ -38,7 +38,7 @@ const Rotas = () => {
           component={AdminCadastroProduto}
         />
         <Route
-          path="/admin/produtos/editar-produto"
+          path="/admin/produtos/editar-produto/:id"
           exact
           component={AdminEditarProduto}
         />

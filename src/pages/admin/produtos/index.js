@@ -72,17 +72,14 @@ const useStyles = makeStyles(theme => ({
 
 export default function AdminProdutos({ titlePage }) {
   const classes = useStyles();
-  const theme = useTheme();
   const [open, setOpen] = React.useState(false);
-  const [listaProdutos, setListaProdutos] = useState("");
+  const [listaProdutos, setListaProdutos] = useState([]);
 
   useEffect(() => {
     async function todosProdutos() {
-      const response = await api.get("/produtos");
-      setListaProdutos(response);
-      console.log(response.data);
+      const response = await api.get("/produtos/");
+      setListaProdutos(response.data);
     }
-    console.log(listaProdutos);
 
     todosProdutos();
   }, []);
@@ -105,7 +102,7 @@ export default function AdminProdutos({ titlePage }) {
         <div className={classes.drawerHeader} />
 
         <Grid container spacing={2}>
-          {listaProdutos.data.map(produto => (
+          {listaProdutos.map(produto => (
             <Grid item xs={12} sm={6} md={3} key={produto._id}>
               <Card className={classes.root}>
                 <CardActionArea>
@@ -148,6 +145,49 @@ export default function AdminProdutos({ titlePage }) {
               </Card>
             </Grid>
           ))}
+          {/* {listaProdutos.map(produto => ( */}
+          {/*   <Grid item xs={12} sm={6} md={3} key={produto._id}> */}
+          {/*     <Card className={classes.root}> */}
+          {/*       <CardActionArea> */}
+          {/*         <CardMedia */}
+          {/*           component="img" */}
+          {/*           alt={produto.name_product} */}
+          {/*           height="140" */}
+          {/*           image={produto.name_product} */}
+          {/*           title={produto.name_product} */}
+          {/*         /> */}
+          {/*         <CardContent> */}
+          {/*           <Typography gutterBottom variant="h5" component="h2"> */}
+          {/*             {produto.name_product} */}
+          {/*           </Typography> */}
+          {/*           <Typography */}
+          {/*             variant="body2" */}
+          {/*             color="textSecondary" */}
+          {/*             component="p" */}
+          {/*           > */}
+          {/*             {produto.description} */}
+          {/*           </Typography> */}
+          {/*           <Typography */}
+          {/*             color="textSecondary" */}
+          {/*             component="h4" */}
+          {/*             mt={2} */}
+          {/*             style={{ paddingTop: "10px", paddingBottom: "10px" }} */}
+          {/*             spacing={3} */}
+          {/*           > */}
+          {/*             R$ {produto.price} */}
+          {/*           </Typography> */}
+          {/*           <Button */}
+          {/*             variant="contained" */}
+          {/*             color="primary" */}
+          {/*             href="#contained-buttons" */}
+          {/*           > */}
+          {/*             Adicionar a cotacao */}
+          {/*           </Button> */}
+          {/*         </CardContent> */}
+          {/*       </CardActionArea> */}
+          {/*     </Card> */}
+          {/*   </Grid> */}
+          {/* ))} */}
         </Grid>
       </main>
     </div>
