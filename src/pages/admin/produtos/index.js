@@ -79,9 +79,10 @@ export default function AdminProdutos({ titlePage }) {
   useEffect(() => {
     async function todosProdutos() {
       const response = await api.get("/produtos");
-      setListaProdutos(response.data);
-      // console.log(response.data);
+      setListaProdutos(response);
+      console.log(response.data);
     }
+    console.log(listaProdutos);
 
     todosProdutos();
   }, []);
@@ -102,17 +103,17 @@ export default function AdminProdutos({ titlePage }) {
         })}
       >
         <div className={classes.drawerHeader} />
+
         <Grid container spacing={2}>
-          {listaProdutos.map(produto => (
+          {listaProdutos.data.map(produto => (
             <Grid item xs={12} sm={6} md={3} key={produto._id}>
               <Card className={classes.root}>
                 <CardActionArea>
                   <CardMedia
                     component="img"
                     alt={produto.name_product}
-                    height="290"
-                    contain
-                    image={produto.nameImage}
+                    height="140"
+                    image={produto.name_product}
                     title={produto.name_product}
                   />
                   <CardContent>
