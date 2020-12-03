@@ -109,20 +109,14 @@ export default function AdminProdutos({ titlePage }) {
                   <CardMedia
                     component="img"
                     alt={produto.name_product}
-                    height="140"
-                    image={produto.name_product}
+                    height="220"
+                    image={produto.nameImage}
                     title={produto.name_product}
+                    style={{ objectFit: "contain", backgroundColor: "#f9f9f9" }}
                   />
                   <CardContent>
                     <Typography gutterBottom variant="h5" component="h2">
                       {produto.name_product}
-                    </Typography>
-                    <Typography
-                      variant="body2"
-                      color="textSecondary"
-                      component="p"
-                    >
-                      {produto.description}
                     </Typography>
                     <Typography
                       color="textSecondary"
@@ -133,13 +127,22 @@ export default function AdminProdutos({ titlePage }) {
                     >
                       R$ {produto.price}
                     </Typography>
-                    <Button
-                      variant="contained"
-                      color="primary"
-                      href="#contained-buttons"
+                    <Typography
+                      color="textSecondary"
+                      component="small"
+                      mt={2}
+                      style={{ paddingTop: "5px", paddingBottom: "5px" }}
+                      spacing={3}
                     >
-                      Adicionar a cotacao
-                    </Button>
+                      Caixa com 12 unidades
+                    </Typography>
+                    {/* <Button */}
+                    {/*   variant="contained" */}
+                    {/*   color="primary" */}
+                    {/*   href="#contained-buttons" */}
+                    {/* > */}
+                    {/*   Adicionar a cotacao */}
+                    {/* </Button> */}
                   </CardContent>
                 </CardActionArea>
               </Card>

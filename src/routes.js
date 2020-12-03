@@ -22,6 +22,8 @@ import CadastrarEmpresa from "./pages/admin/empresas/cadastrar-empresa";
 import TodasEmpresasLista from "./pages/admin/empresas/todas-empresas";
 import AtualizarEmpresa from "./pages/admin/empresas/atualizar-empresa";
 
+//pedidos
+import PedidosSelect from "./pages/admin/pedidos/";
 import PrivateRoute from "./services/wAuth";
 const Rotas = () => {
   return (
@@ -91,6 +93,8 @@ const Rotas = () => {
           exact
           component={AtualizarEmpresa}
         />
+
+        <Route path="/admin/todos-pedidos" exact component={PedidosSelect} />
       </Switch>
     </BrowserRouter>
   );
